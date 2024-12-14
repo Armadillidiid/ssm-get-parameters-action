@@ -1,0 +1,1 @@
+# ssm-get-parameters-action
