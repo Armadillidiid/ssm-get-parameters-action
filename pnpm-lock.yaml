@@ -8,11 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@vercel/ncc':
+        specifier: ^0.38.3
+        version: 0.38.3
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
 
 packages:
+
+  '@vercel/ncc@0.38.3':
+    resolution: {integrity: sha512-rnK6hJBS6mwc+Bkab+PGPs9OiS0i/3kdTO+CkI8V0/VrW3vmz7O2Pxjw/owOlmo6PKEIxRSeZKv/kuL9itnpYA==}
+    hasBin: true
 
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
@@ -20,5 +27,7 @@ packages:
     hasBin: true
 
 snapshots:
+
+  '@vercel/ncc@0.38.3': {}
 
   typescript@5.7.2: {}
