@@ -1,0 +1,48 @@
+name: Test Local
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-action:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: "ssm-get-parameters-action"
+
+      # - name: Set up AWS CLI
+      #   shell: bash
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y awscli
+
+      - id: install-aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+        with:
+          version: 2
+          verbose: false
+          arch: amd64
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Test Local Action
+        uses: ./ssm-get-parameters-action
+        with:
+          secret: |
+            AUTH_JWT_PUBLIC_KEY_SSM=ssm:/heartbeat-web/prod/auth-jwt-public-key
+          parameter-prefix: "ssm:"
+          env-file-path: "./"
+          with-decryption: true
+
+      - name: Print Env
+        run: |
+          cat .env

@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test-lint:
+    name:  Test & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: pnpm
+
+      - name: Enable Corepack
+        working-directory: ${{ inputs.cwd }}
+        run: corepack enable
+
+      - name: Install Dependencies
+        id: pnpm-install
+        run: pnpm install
+
+      - name: Check Format
+        id: npm-format-check
+        run: pnpm format:check
+
+      - name: Lint
+        id: npm-lint
+        run: pnpm run lint
+
+      # - name: Test
+      #   id: npm-ci-test
+      #   run: pnpm run test
