@@ -26,5 +26,8 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true
-  }
+  },
+
+  "include": ["src/**/*.ts", "src/**/*.json", "src/types/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }
