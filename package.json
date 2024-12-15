@@ -6,13 +6,16 @@
   "type": "module",
   "files": [
     "/dist",
-    "./action.yml",
+    "./action.yaml",
     "./README.md",
     "LICENSE"
   ],
   "scripts": {
     "dev": "ncc build ./src/index.ts -o dist -m --watch",
     "build": "ncc build ./src/index.ts -o dist -m",
+    "format:check": "biome check",
+    "lint:": "biome lint",
+    "format:": "biome format",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [],
@@ -21,7 +24,15 @@
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.10.2",
     "@vercel/ncc": "^0.38.3",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@aws-sdk/client-ssm": "^3.712.0",
+    "effect": "^3.11.7",
+    "p-limit": "^6.1.0",
+    "zod": "^3.24.1"
   }
 }
