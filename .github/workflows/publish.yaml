@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,10 +19,6 @@ jobs:
       - name: Enable Corepack
         working-directory: ${{ inputs.cwd }}
         run: corepack enable
-
-      # - name: Install Dependencies
-      #   run: pnpm install
-      # - run: pnpm build
 
       - name: Prepare repository
         run: git fetch --unshallow --tags
