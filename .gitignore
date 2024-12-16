@@ -20,7 +20,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.husky
 .eslintcache
 .zellij*.kdl
 **/.serverless
