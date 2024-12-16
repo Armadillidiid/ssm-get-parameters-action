@@ -8,7 +8,7 @@ branding:
 
 inputs:
   secret:
-    description: "A mapping of environment variable names to their corresponding AWS SSM parameter paths. This can be provided as a JSON object or as key-value pairs"
+    description: "Res;lve AWS SSM parameters provided as key value pairs or JSON."
     required: true
     default: "World"
   with-decryption:
