@@ -31,34 +31,34 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Get SSM Parameters
-        uses: ./ssm-get-parameters-action
+      - name: Get SSM Parameters - Key Value Pairs
+        uses: Armadillidiid/ssm-get-parameters-action@v1
         with:
           secret: |
             AUTH_JWT_PUBLIC_KEY=/my-app/prod/auth-jwt-public-key
             AUTH_JWT_PRIVATE_KEY=/my-app/prod/auth-jwt-private-key
           with-decryption: true
 
-      # - name: Get SSM Parameters With JSON Secrets
-      #   uses: ./ssm-get-parameters-action
-      #   with:
-      #     secret: ${{ secrets.SSM_SECRET }}
-      #     with-decryption: true
-      #     is-json: true
+      - name: Get SSM Parameters - JSON
+        uses: Armadillidiid/ssm-get-parameters-action@v1
+        with:
+          secret: "{\"AUTH_JWT_PUBLIC_KEY_SSM\":\"/my-app/prod/auth-jwt-public-key\"}"
+          with-decryption: true
+          is-json: true
 ```
 
 ## Inputs
 
-| Name              | Description                                                                 | Required | Default |
-|-------------------|-----------------------------------------------------------------------------|----------|---------|
-| `secret`          | A mapping of environment variable names to their corresponding AWS SSM parameter paths. This can be provided as a JSON object or as key-value pairs. | true     |         |
-| `with-decryption` | If set to true, retrieves decrypted values for secure string parameters.     | false    | `false` |
-| `parameter-prefix`| An optional prefix to filter SSM parameter names. Only parameters matching this prefix will be fetched. | false    | ""         |
-| `env-file-path`   | The file path where the environment variables will be saved. Defaults to `./` | false    | `./`    |
-| `is-json`         | Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object. | false    | false        |
+| Name               | Description                                                                                                                                          | Required | Default |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- |
+| `secret`           | A mapping of environment variable names to their corresponding AWS SSM parameter paths. This can be provided as a JSON object or as key-value pairs. | true     |         |
+| `with-decryption`  | If set to true, retrieves decrypted values for secure string parameters.                                                                             | false    | `false` |
+| `parameter-prefix` | An optional prefix to filter SSM parameter names. Only parameters matching this prefix will be fetched.                                              | false    | ""      |
+| `env-file-path`    | The file path where the environment variables will be saved. Defaults to `./`                                                                        | false    | `./`    |
+| `is-json`          | Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object.                                                 | false    | false   |
 
 ## Outputs
 
-| Name  | Description |
-|-------|-------------|
+| Name  | Description                                       |
+| ----- | ------------------------------------------------- |
 | `env` | JSON string of the fetched environment variables. |
