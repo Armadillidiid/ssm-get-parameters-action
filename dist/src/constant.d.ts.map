@@ -1,1 +1,1 @@
-{"version":3,"file":"constant.d.ts","sourceRoot":"","sources":["file:///home/emmanuel/ghq/github.com/Armadillidiid/ssm-get-parameters-action/src/constant.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,2BAA2B,IAAI,CAAA"}
+{"version":3,"file":"constant.d.ts","sourceRoot":"","sources":["file:///home/emmanuel/ghq/github.com/Armadillidiid/ssm-get-parameters-action/src/constant.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,2BAA2B,IAAI,CAAA;AAC5C,eAAO,MAAM,YAAY,SAAS,CAAA;AAClC,eAAO,MAAM,cAAc,QAAQ,CAAA"}

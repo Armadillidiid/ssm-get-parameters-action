@@ -1,47 +1,58 @@
 import * as core from "@actions/core";
 import { env } from "./env.js";
+import { fetchParameters, parseSecrets, saveEnvToPath } from "./utils.js";
 import {
-  fetchParameters,
-  loadParameterFromSSM,
-  parseSecrets,
-} from "./utils.js";
-import fs from "fs/promises";
-import pLimit from "p-limit";
-import { MAX_CONCURRENT_SSM_PROMISES } from "./constant.js";
+  MAX_CONCURRENT_SSM_PROMISES,
+  ENV_OUTPUT_KEY,
+  ENV_FILENAME,
+} from "./constant.js";
 import path from "path";
+import { Effect, Either, Schedule } from "effect";
+import type { ParsedSecret } from "./schemas.js";
 
 const main = async (): Promise<void> => {
   let envValues: [string, string][] = [];
   envValues = parseSecrets(env.SECRET, env.IS_JSON);
-  const limit = pLimit(MAX_CONCURRENT_SSM_PROMISES);
 
   const promises = envValues.map(([k, v]) =>
-    limit(async () => {
-      try {
-        core.debug(`Key: ${k}, Value: ${v}`);
-        const p = await fetchParameters(v, {
-          prefix: env.PARAMETER_PREFIX,
-          withDecryption: env.WITH_DECRYPTION,
-        });
-        if (p) core.info(p);
-        return [k, p || v] as const;
-      } catch (error) {
-        core.error(`Failed to fetch parameter: ${v}`);
-        throw error;
+    Effect.tryPromise(async () => {
+      core.debug(`Key: ${k}, Value: ${v}`);
+      const res = await Effect.runPromise(
+        Effect.either(
+          Effect.retry(
+            fetchParameters(v, {
+              prefix: env.PARAMETER_PREFIX,
+              withDecryption: env.WITH_DECRYPTION,
+            }),
+            Schedule.addDelay(Schedule.recurs(3), () => 1000),
+          ),
+        ),
+      );
+
+      if (Either.isLeft(res)) {
+        const err = res.left;
+        if (err instanceof Error) {
+          core.error(err.message);
+        }
+        core.setFailed(`Failed to fetch parameter: ${v}`);
+        process.exit();
       }
+
+      const p = res.right;
+      if (p) {
+        if (res) core.info(p);
+      }
+      return [k, p || v] satisfies ParsedSecret[number];
     }),
   );
 
-  const result = await Promise.all(promises);
-  const outputEnv = result
-    .map(([key, value]) => `${key}=${value}`)
-    .join("\n");
-  core.info(`Saving environment variables to path: ${env.ENV_FILE_PATH}`);
-
-  await fs.writeFile(path.join(env.ENV_FILE_PATH, ".env"), outputEnv, {
-    mode: "0644",
-  });
-  core.setOutput("env", JSON.stringify(result));
+  const result = await Effect.runPromise(
+    Effect.all(promises, {
+      concurrency: MAX_CONCURRENT_SSM_PROMISES,
+    }),
+  );
+  await saveEnvToPath(path.join(env.ENV_FILE_PATH, ENV_FILENAME), result);
+  core.setOutput(ENV_OUTPUT_KEY, JSON.stringify(result));
 };
 
 main().catch((error) => {

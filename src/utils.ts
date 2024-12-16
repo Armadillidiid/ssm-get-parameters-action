@@ -5,7 +5,9 @@ import {
 } from "@aws-sdk/client-ssm";
 import { z } from "zod";
 import * as core from "@actions/core";
-import { parsedSecret, jsonSchema } from "./schemas.js";
+import { parsedSecret, jsonSchema, type ParsedSecret } from "./schemas.js";
+import { Effect } from "effect";
+import fs from "fs/promises";
 
 export const loadParameterFromSSM = async (
   name: string,
@@ -47,11 +49,11 @@ export const parseSecrets = (
       core.error(error.format()._errors.toString());
     }
     core.setFailed("Failed to parse secrets");
-    process.exit(1);
+    process.exit();
   }
 };
 
-export const fetchParameters = async (
+export const fetchParameters = (
   pathKey: string,
   {
     prefix,
@@ -61,18 +63,30 @@ export const fetchParameters = async (
     withDecryption: boolean;
   },
 ) => {
-  let parameterName;
+  return Effect.tryPromise(async () => {
+    let parameterName;
 
-  if (!prefix) {
-    parameterName = pathKey;
-  } else if (pathKey.startsWith(prefix)) {
-    parameterName = pathKey.substring(prefix.length);
-  } else return;
+    if (!prefix) {
+      parameterName = pathKey;
+    } else if (pathKey.startsWith(prefix)) {
+      parameterName = pathKey.substring(prefix.length);
+    } else {
+      return;
+    }
 
-  const parameter = await loadParameterFromSSM(parameterName, withDecryption);
-  if (!parameter) {
-    core.setFailed(`Key with path is undefined: ${pathKey}`);
-    process.exit(1);
-  }
-  return parameter;
+    const parameter = await loadParameterFromSSM(parameterName, withDecryption);
+    if (!parameter) {
+      core.setFailed(`Key with path is undefined: ${pathKey}`);
+      process.exit();
+    }
+    return parameter;
+  });
+};
+
+export const saveEnvToPath = async (path: string, result: ParsedSecret) => {
+  core.info(`Saving environment variable: ${path}`);
+  const outputEnv = result.map(([key, value]) => `${key}=${value}`).join("\n");
+  await fs.writeFile(path, outputEnv, {
+    mode: "0644",
+  });
 };

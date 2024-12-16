@@ -11,3 +11,4 @@ export const jsonSchema: z.ZodType<Json> = z.lazy(() =>
 
 
 export const parsedSecret = z.tuple([z.string(), z.string()]).array()
+export type ParsedSecret = z.infer<typeof parsedSecret>
