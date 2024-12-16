@@ -4,6 +4,8 @@
   "description": "Get Parameters from AWS SSM",
   "main": "dist/index.js",
   "type": "module",
+  "author": "Emmanuel Isenah <emmanuelisenah@gmail.com> (https://emmanuelisenah.com)",
+  "license": "ISC",
   "private": true,
   "files": [
     "/dist",
@@ -11,6 +13,10 @@
     "./README.md",
     "LICENSE"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/armadillidiid/ssm-get-parameters-action.git"
+  },
   "scripts": {
     "dev": "ncc build ./src/index.ts -o dist -m --watch",
     "build": "ncc build ./src/index.ts -o dist -m",
@@ -24,12 +30,6 @@
     "aws",
     "ssm"
   ],
-  "author": "Emmanuel Isenah <emmanuelisenah@gmail.com> (https://emmanuelisenah.com)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/armadillidiid/ssm-get-parameters-action.git"
-  },
-  "license": "ISC",
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
   "engines": {
     "node": ">=20"

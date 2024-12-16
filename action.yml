@@ -1,6 +1,6 @@
 name: "ssm-get-parameters-action"
 description: "Resolve parameters from AWS SSM Parameter Store and exports them as environment variables."
-author: "armadillidiid"
+author: "Emmanuel Isenah <emmanuelisenah@gmail.com> (https://emmanuelisenah.com)"
 
 branding:
   icon: "sliders"
