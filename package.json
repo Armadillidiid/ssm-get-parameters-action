@@ -7,7 +7,7 @@
 	"author": "Emmanuel Isenah <emmanuelisenah@gmail.com> (https://emmanuelisenah.com)",
 	"license": "ISC",
 	"private": true,
-	"files": ["/dist", "./action.yml", "./README.md", "LICENSE"],
+	"files": ["/dist", "./action.yaml", "./README.md", "LICENSE"],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/armadillidiid/ssm-get-parameters-action.git"
