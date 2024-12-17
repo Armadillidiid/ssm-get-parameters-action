@@ -5,6 +5,7 @@
 **/coverage
 
 **/build
+**/dist
 
 *.pem
 
