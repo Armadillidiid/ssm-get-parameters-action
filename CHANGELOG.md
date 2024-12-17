@@ -1,3 +1,16 @@
+# v0.0.3 (Tue Dec 17 2024)
+
+#### 🐛 Bug Fix
+
+- Development [#4](https://github.com/Armadillidiid/ssm-get-parameters-action/pull/4) ([@Armadillidiid](https://github.com/Armadillidiid))
+- Development [#2](https://github.com/Armadillidiid/ssm-get-parameters-action/pull/2) ([@Armadillidiid](https://github.com/Armadillidiid))
+
+#### Authors: 1
+
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v0.0.2 (Tue Dec 17 2024)
 
 #### 🐛 Bug Fix
