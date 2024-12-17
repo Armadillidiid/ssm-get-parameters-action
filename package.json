@@ -1,13 +1,18 @@
 {
 	"name": "ssm-get-parameters-action",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Get Parameters from AWS SSM",
 	"main": "dist/index.js",
 	"type": "module",
 	"author": "Emmanuel Isenah <emmanuelisenah@gmail.com> (https://emmanuelisenah.com)",
 	"license": "ISC",
 	"private": true,
-	"files": ["/dist", "./action.yaml", "./README.md", "LICENSE"],
+	"files": [
+		"/dist",
+		"./action.yaml",
+		"./README.md",
+		"LICENSE"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/armadillidiid/ssm-get-parameters-action.git"
