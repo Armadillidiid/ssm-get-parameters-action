@@ -10,14 +10,12 @@ To use this action in your workflow, add the following step to your `.github/wor
 
 ```yaml
 jobs:
-  test-action:
-    name: GitHub Actions Test
+  deploy:
+    name: GitHub Actions Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          path: "ssm-get-parameters-action"
 
       - name: Set up AWS CLI
         run: |
@@ -39,12 +37,12 @@ jobs:
             AUTH_JWT_PRIVATE_KEY=/my-app/prod/auth-jwt-private-key
           with-decryption: true
 
-      - name: Get SSM Parameters - JSON
-        uses: Armadillidiid/ssm-get-parameters-action@v1
-        with:
-          secret: "{\"AUTH_JWT_PUBLIC_KEY_SSM\":\"/my-app/prod/auth-jwt-public-key\"}"
-          with-decryption: true
-          is-json: true
+      # - name: Get SSM Parameters - JSON
+      #   uses: Armadillidiid/ssm-get-parameters-action@v1
+      #   with:
+      #     secret: "{\"AUTH_JWT_PUBLIC_KEY_SSM\":\"/my-app/prod/auth-jwt-public-key\"}"
+      #     with-decryption: true
+      #     is-json: true
 ```
 
 ## Inputs
