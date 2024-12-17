@@ -28,8 +28,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Test Local Action
-        uses: Armadillidiid/ssm-get-parameters-action
-        # uses: ./ssm-get-parameters-action
+        uses: ./ssm-get-parameters-action
         env:
           ACTIONS_STEP_DEBUG: true
         with:
