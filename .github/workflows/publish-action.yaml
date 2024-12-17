@@ -1,18 +1,20 @@
-name: Publish
+name: Publish Action
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published, edited]
 
 permissions:
   contents: write
 
 jobs:
-  publish:
+  publish-action:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -23,10 +25,11 @@ jobs:
         working-directory: ${{ inputs.cwd }}
         run: corepack enable
 
-      - name: Prepare repository
-        run: git fetch --unshallow --tags
+      - name: Install Deps and Build
+        run: pnpm install
+      - run: pnpm build
 
-      - name: Create Release
+      - name: Push to Major Version Tag
+        uses: JasonEtco/build-and-tag-action@v2
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm dlx auto shipit
+          GITHUB_TOKEN: ${{ github.token }}
