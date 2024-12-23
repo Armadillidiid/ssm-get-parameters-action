@@ -1,0 +1,37 @@
+name: "ssm-get-parameters-action"
+description: "Resolve parameters from AWS SSM Parameter Store and exports them as environment variables."
+author: "Emmanuel Isenah <emmanuelisenah@gmail.com> (https://emmanuelisenah.com)"
+
+branding:
+  icon: "sliders"
+  color: "orange"
+
+inputs:
+  secret:
+    description: "A mapping of environment variable names to their corresponding AWS SSM parameter paths. This can be provided as a JSON object or as key-value pairs"
+    required: true
+    default: "World"
+  with-decryption:
+    description: "If set to true, retrieves decrypted values for secure string parameters."
+    required: false
+    default: "false"
+  parameter-prefix:
+    description: "An optional prefix to filter SSM parameter names. Only parameters matching this prefix will be fetched."
+    required: false
+    default: ""
+  env-file-path:
+    description: "The file path where the environment variables will be saved. Defaults to `./`."
+    required: false
+    default: "./"
+  is-json:
+    description: "Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object."
+    required: false
+    default: "false"
+
+outputs:
+  env:
+    description: "A JSON stringified object containing the environment variables fetched from SSM."
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
