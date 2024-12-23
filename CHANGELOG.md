@@ -1,3 +1,16 @@
+# v1.0.1 (Mon Dec 23 2024)
+
+#### ⚠️ Pushed to `main`
+
+- add extra action.yaml file ([@Armadillidiid](https://github.com/Armadillidiid))
+- update changelog ([@Armadillidiid](https://github.com/Armadillidiid))
+
+#### Authors: 1
+
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v0.0.5 (Tue Dec 17 2024)
 
 
