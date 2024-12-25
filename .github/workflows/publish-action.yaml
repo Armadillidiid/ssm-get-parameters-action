@@ -30,6 +30,6 @@ jobs:
       - run: pnpm build
 
       - name: Push to Major Version Tag
-        uses: JasonEtco/build-and-tag-action@v2
+        uses: teunmooij/github-versioned-release@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
