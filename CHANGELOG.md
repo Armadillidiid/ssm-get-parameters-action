@@ -1,3 +1,19 @@
+# v1.0.2 (Wed Dec 25 2024)
+
+#### ⚠️ Pushed to `main`
+
+- fix: update publish action ([@Armadillidiid](https://github.com/Armadillidiid))
+- update package.json ([@Armadillidiid](https://github.com/Armadillidiid))
+- Merge branch 'main' of ssh://github.com/Armadillidiid/ssm-get-parameters-action ([@Armadillidiid](https://github.com/Armadillidiid))
+- add extra action.yaml file ([@Armadillidiid](https://github.com/Armadillidiid))
+- update changelog ([@Armadillidiid](https://github.com/Armadillidiid))
+
+#### Authors: 1
+
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v1.0.1 (Mon Dec 23 2024)
 
 #### ⚠️ Pushed to `main`
