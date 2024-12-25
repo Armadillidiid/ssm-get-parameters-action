@@ -1,3 +1,16 @@
+# v1.0.3 (Wed Dec 25 2024)
+
+#### ⚠️ Pushed to `main`
+
+- Merge ([@Armadillidiid](https://github.com/Armadillidiid))
+- fix: update publish action ([@Armadillidiid](https://github.com/Armadillidiid))
+
+#### Authors: 1
+
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v1.0.2 (Wed Dec 25 2024)
 
 #### ⚠️ Pushed to `main`
