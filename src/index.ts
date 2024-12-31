@@ -52,7 +52,7 @@ const main = async (): Promise<void> => {
 		}),
 	);
 	await saveEnvToPath(path.join(env.ENV_FILE_PATH, ENV_FILENAME), result);
-	core.setOutput(ENV_OUTPUT_KEY, JSON.stringify(result));
+	core.setOutput(ENV_OUTPUT_KEY, JSON.stringify(Object.fromEntries(result)));
 };
 
 main().catch((error) => {
