@@ -1,3 +1,15 @@
+# v1.0.4 (Tue Dec 31 2024)
+
+#### 🐛 Bug Fix
+
+- fix: convert results to Object before JSON.stringify [#5](https://github.com/Armadillidiid/ssm-get-parameters-action/pull/5) ([@Armadillidiid](https://github.com/Armadillidiid))
+
+#### Authors: 1
+
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v1.0.3 (Wed Dec 25 2024)
 
 #### ⚠️ Pushed to `main`
