@@ -27,11 +27,23 @@ inputs:
     description: "Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object."
     required: false
     default: "false"
+  by-path:
+    description: "When set to true, the secret input is treated as a single SSM parameter path. All parameters under that path are fetched recursively using GetParametersByPath. Mutually exclusive with individual parameter mode."
+    required: false
+    default: "false"
+  transform-keys:
+    description: "When set to true, converts all environment variable keys to UPPER_SNAKE_CASE. Applies to both individual and path-based modes."
+    required: false
+    default: "false"
+  recursive:
+    description: "When by-path is true, controls whether to recursively fetch parameters from sub-paths. Maps to the Recursive parameter of GetParametersByPath."
+    required: false
+    default: "true"
 
 outputs:
   env:
     description: "A JSON stringified object containing the environment variables fetched from SSM."
 
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"

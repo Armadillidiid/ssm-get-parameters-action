@@ -2,7 +2,12 @@
 
 ## Overview
 
-`ssm-get-parameters-action` is a GitHub Action that fetches parameters from AWS Systems Manager (SSM) Parameter Store and exports them as environment variables. It supports optional filtering based on a specified prefix and can handle secrets in JSON format.
+`ssm-get-parameters-action` is a GitHub Action that fetches parameters from AWS Systems Manager (SSM) Parameter Store and exports them as environment variables. It supports two modes:
+
+- **Individual mode** (default): Map explicit environment variable names to SSM parameter paths.
+- **Path-based mode** (`by-path: true`): Fetch all parameters recursively under an SSM path. Keys are derived from the last path segment.
+
+Both modes support optional key transformation to UPPER_SNAKE_CASE.
 
 ## Usage
 
@@ -43,17 +48,35 @@ jobs:
       #     secret: "{\"AUTH_JWT_PUBLIC_KEY_SSM\":\"/my-app/prod/auth-jwt-public-key\"}"
       #     with-decryption: true
       #     is-json: true
+
+      - name: Get SSM Parameters - Path Based (recursive)
+        uses: Armadillidiid/ssm-get-parameters-action@v1
+        with:
+          by-path: true
+          secret: /my-app/prod
+          with-decryption: true
+
+      - name: Get SSM Parameters - With UPPER_SNAKE_CASE keys
+        uses: Armadillidiid/ssm-get-parameters-action@v1
+        with:
+          secret: |
+            AUTH_JWT_PUBLIC_KEY=/my-app/prod/auth-jwt-public-key
+          with-decryption: true
+          transform-keys: true
 ```
 
 ## Inputs
 
 | Name               | Description                                                                                                                                          | Required | Default |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- |
-| `secret`           | A mapping of environment variable names to their corresponding AWS SSM parameter paths. This can be provided as a JSON object or as key-value pairs. | true     |         |
+| `secret`           | In individual mode: a mapping of env var names to SSM parameter paths (key=value or JSON). In path-based mode: a single SSM path to enumerate.       | true     |         |
 | `with-decryption`  | If set to true, retrieves decrypted values for secure string parameters.                                                                             | false    | `false` |
-| `parameter-prefix` | An optional prefix to filter SSM parameter names. Only parameters matching this prefix will be fetched.                                              | false    | ""      |
-| `env-file-path`    | The file path where the environment variables will be saved. Defaults to `./`                                                                        | false    | `./`    |
-| `is-json`          | Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object.                                                 | false    | false   |
+| `parameter-prefix` | An optional prefix to filter SSM parameter names. Only parameters matching this prefix will be fetched. Ignored in path-based mode.                  | false    | ""      |
+| `env-file-path`    | The file path where the environment variables will be saved. Defaults to `./`.                                                                        | false    | `./`    |
+| `is-json`          | Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object. Ignored in path-based mode.                     | false    | false   |
+| `by-path`          | When set to true, the `secret` input is treated as a single SSM path. All parameters under that path are fetched recursively.                        | false    | `false` |
+| `transform-keys`   | When set to true, converts all environment variable keys to UPPER_SNAKE_CASE. Applies in both individual and path-based modes.                       | false    | `false` |
+| `recursive`        | When `by-path` is true, controls whether to recursively fetch parameters from sub-paths. Maps to the `Recursive` parameter of `GetParametersByPath`. | false    | `true`  |
 
 ## Outputs
 

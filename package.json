@@ -10,7 +10,6 @@
 	"files": [
 		"/dist",
 		"./action.yml",
-		"./action.yaml",
 		"./README.md",
 		"LICENSE"
 	],
