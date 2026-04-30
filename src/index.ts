@@ -1,10 +1,7 @@
 import path from "node:path";
 import * as core from "@actions/core";
 import { Effect, Either, Schedule } from "effect";
-import {
-	ENV_FILENAME,
-	MAX_CONCURRENT_SSM_PROMISES,
-} from "./constant.js";
+import { ENV_FILENAME, MAX_CONCURRENT_SSM_PROMISES } from "./constant.js";
 import { env } from "./env.js";
 import type { ParsedSecret } from "./schemas.js";
 import {
@@ -110,10 +107,7 @@ const main = async (): Promise<void> => {
 	}
 
 	if (env.ENV_FILE_PATH) {
-		await saveEnvToPath(
-			path.join(env.ENV_FILE_PATH, ENV_FILENAME),
-			envValues,
-		);
+		await saveEnvToPath(path.join(env.ENV_FILE_PATH, ENV_FILENAME), envValues);
 	}
 
 	for (const [key, value] of envValues) {
