@@ -82,7 +82,7 @@ const main = async (): Promise<void> => {
 
 				const p = res.right;
 				if (p) {
-					if (res) core.info(p);
+					core.info(`Resolved parameter for key: ${k}`);
 				}
 				return [k, p || v] satisfies ParsedSecret[number];
 			}),
