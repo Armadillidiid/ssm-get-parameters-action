@@ -45,5 +45,5 @@ outputs:
     description: "A JSON stringified object containing the environment variables fetched from SSM."
 
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"
