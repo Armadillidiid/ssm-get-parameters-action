@@ -1,3 +1,15 @@
+# v1.0.5 (Thu Apr 30 2026)
+
+#### 🐛 Bug Fix
+
+- feat: add GetParametersByPath support and key transformation [#6](https://github.com/Armadillidiid/ssm-get-parameters-action/pull/6) ([@Armadillidiid](https://github.com/Armadillidiid))
+
+#### Authors: 1
+
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v1.0.4 (Tue Dec 31 2024)
 
 #### 🐛 Bug Fix
