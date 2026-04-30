@@ -141,6 +141,6 @@ export const saveEnvToPath = async (path: string, result: ParsedSecret) => {
 	core.info(`Saving environment variable: ${path}`);
 	const outputEnv = result.map(([key, value]) => `${key}=${value}`).join("\n");
 	await fs.writeFile(path, outputEnv, {
-		mode: "0644",
+		mode: 0o600,
 	});
 };

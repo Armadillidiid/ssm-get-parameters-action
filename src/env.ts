@@ -16,20 +16,17 @@ const byPath: boolean = getBooleanInput("by-path");
 const transformKeys: boolean = getBooleanInput("transform-keys");
 const recursive: boolean = getBooleanInput("recursive");
 
-const envFilePath = getEnvFilePath();
-
 export const env = {
 	SECRET: secret,
 	WITH_DECRYPTION: withDecryption,
 	PARAMETER_PREFIX: prefix,
-	ENV_FILE_PATH: envFilePath,
 	IS_JSON: isJSON,
 	BY_PATH: byPath,
 	TRANSFORM_KEYS: transformKeys,
 	RECURSIVE: recursive,
 };
 
-function getEnvFilePath(): string {
+export function getEnvFilePath(): string {
 	const envFilePathInput: string = getInput("env-file-path");
 	if (!envFilePathInput) {
 		return "";

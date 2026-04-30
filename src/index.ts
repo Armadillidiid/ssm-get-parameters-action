@@ -2,7 +2,7 @@ import path from "node:path";
 import * as core from "@actions/core";
 import { Effect, Either, Schedule } from "effect";
 import { ENV_FILENAME, MAX_CONCURRENT_SSM_PROMISES } from "./constant.js";
-import { env } from "./env.js";
+import { env, getEnvFilePath } from "./env.js";
 import type { ParsedSecret } from "./schemas.js";
 import {
 	fetchParameters,
@@ -15,6 +15,16 @@ import {
 } from "./utils.js";
 
 const main = async (): Promise<void> => {
+	let envFilePath: string;
+	try {
+		envFilePath = getEnvFilePath();
+	} catch (error) {
+		if (error instanceof Error) {
+			core.setFailed(error.message);
+		}
+		process.exit(1);
+	}
+
 	let envValues: [string, string][] = [];
 
 	if (env.BY_PATH) {
@@ -106,8 +116,8 @@ const main = async (): Promise<void> => {
 		process.exit();
 	}
 
-	if (env.ENV_FILE_PATH) {
-		await saveEnvToPath(path.join(env.ENV_FILE_PATH, ENV_FILENAME), envValues);
+	if (envFilePath) {
+		await saveEnvToPath(path.join(envFilePath, ENV_FILENAME), envValues);
 	}
 
 	for (const [key, value] of envValues) {
