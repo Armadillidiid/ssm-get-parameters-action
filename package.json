@@ -1,6 +1,6 @@
 {
 	"name": "ssm-get-parameters-action",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Get Parameters from AWS SSM",
 	"main": "dist/index.js",
 	"type": "module",
