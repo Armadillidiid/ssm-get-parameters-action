@@ -12,6 +12,9 @@ const prefix: string | undefined = getInput("parameter-prefix").length
 	? getInput("parameter-prefix")
 	: undefined;
 const isJSON: boolean = getBooleanInput("is-json");
+const byPath: boolean = getBooleanInput("by-path");
+const transformKeys: boolean = getBooleanInput("transform-keys");
+const recursive: boolean = getBooleanInput("recursive");
 
 let envFilePath = "";
 try {
@@ -31,6 +34,9 @@ export const env = {
 	PARAMETER_PREFIX: prefix,
 	ENV_FILE_PATH: envFilePath,
 	IS_JSON: isJSON,
+	BY_PATH: byPath,
+	TRANSFORM_KEYS: transformKeys,
+	RECURSIVE: recursive,
 };
 
 function getEnvFilePath(): string {

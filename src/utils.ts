@@ -3,6 +3,8 @@ import * as core from "@actions/core";
 import {
 	GetParameterCommand,
 	type GetParameterCommandInput,
+	GetParametersByPathCommand,
+	type GetParametersByPathCommandInput,
 	SSMClient,
 } from "@aws-sdk/client-ssm";
 import { Effect } from "effect";
@@ -80,6 +82,59 @@ export const fetchParameters = (
 		}
 		return parameter;
 	});
+};
+
+export const loadParametersByPath = async (
+	path: string,
+	withDecryption: boolean,
+	recursive: boolean,
+): Promise<{ Name: string; Value: string }[]> => {
+	const ssm = new SSMClient({});
+	const parameters: { Name: string; Value: string }[] = [];
+	let nextToken: string | undefined;
+
+	do {
+		const input: GetParametersByPathCommandInput = {
+			Path: path,
+			WithDecryption: withDecryption,
+			Recursive: recursive,
+			NextToken: nextToken,
+		};
+		const command = new GetParametersByPathCommand(input);
+		const result = await ssm.send(command);
+		for (const param of result.Parameters || []) {
+			if (param.Name !== undefined && param.Value !== undefined) {
+				parameters.push({ Name: param.Name, Value: param.Value });
+			}
+		}
+		nextToken = result.NextToken;
+	} while (nextToken);
+
+	return parameters;
+};
+
+export const extractKeyFromPath = (fullName: string): string => {
+	const segments = fullName.split("/").filter(Boolean);
+	return segments[segments.length - 1] || "";
+};
+
+export const transformToUpperSnakeCase = (key: string): string => {
+	return key
+		.replace(/([a-z])([A-Z])/g, "$1_$2")
+		.replace(/[-\s.]+/g, "_")
+		.replace(/_+/g, "_")
+		.replace(/^_|_$/g, "")
+		.toUpperCase();
+};
+
+export const findDuplicateKeys = (entries: [string, string][]): string[] => {
+	const seen = new Map<string, number>();
+	for (const [key] of entries) {
+		seen.set(key, (seen.get(key) || 0) + 1);
+	}
+	return [...seen.entries()]
+		.filter(([, count]) => count > 1)
+		.map(([key]) => key);
 };
 
 export const saveEnvToPath = async (path: string, result: ParsedSecret) => {

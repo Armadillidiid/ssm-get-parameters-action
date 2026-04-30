@@ -10,7 +10,6 @@
 	"files": [
 		"/dist",
 		"./action.yml",
-		"./action.yaml",
 		"./README.md",
 		"LICENSE"
 	],
@@ -31,22 +30,34 @@
 		"aws",
 		"ssm"
 	],
-	"packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
 	"engines": {
-		"node": ">=20"
+		"node": ">=24"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"@types/node": "^22.10.2",
-		"@vercel/ncc": "^0.38.3",
+		"@biomejs/biome": "2.4.13",
+		"@types/node": "^25.6.0",
+		"@vercel/ncc": "^0.38.4",
 		"husky": "^9.1.7",
-		"typescript": "^5.7.2"
+		"typescript": "^6.0.3"
 	},
 	"dependencies": {
-		"@actions/core": "^1.11.1",
-		"@aws-sdk/client-ssm": "^3.712.0",
-		"effect": "^3.11.7",
-		"p-limit": "^6.1.0",
-		"zod": "^3.24.1"
-	}
+		"@actions/core": "^3.0.1",
+		"@aws-sdk/client-ssm": "^3.1038.0",
+		"effect": "^3.21.2",
+		"p-limit": "^7.3.0",
+		"zod": "^4.3.6"
+	},
+	"devEngines": {
+		"packageManager": [
+			{
+				"name": "pnpm",
+				"version": "11.0.0",
+				"onFail": "download"
+			},
+			{
+				"name": "npm"
+			}
+		]
+	},
+	"packageManager": "pnpm@11.0.0"
 }
