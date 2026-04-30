@@ -112,6 +112,11 @@ const main = async (): Promise<void> => {
 
 	await saveEnvToPath(path.join(env.ENV_FILE_PATH, ENV_FILENAME), envValues);
 	core.setOutput(ENV_OUTPUT_KEY, JSON.stringify(Object.fromEntries(envValues)));
+
+	for (const [key, value] of envValues) {
+		core.setSecret(value);
+		core.setOutput(key, value);
+	}
 };
 
 main().catch((error) => {
