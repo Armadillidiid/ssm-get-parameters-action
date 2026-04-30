@@ -103,7 +103,7 @@ export const loadParametersByPath = async (
 		const command = new GetParametersByPathCommand(input);
 		const result = await ssm.send(command);
 		for (const param of result.Parameters || []) {
-			if (param.Name && param.Value) {
+			if (param.Name !== undefined && param.Value !== undefined) {
 				parameters.push({ Name: param.Name, Value: param.Value });
 			}
 		}
