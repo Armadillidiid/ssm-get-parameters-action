@@ -1,3 +1,16 @@
+# v1.0.6 (Thu Apr 30 2026)
+
+#### 🐛 Bug Fix
+
+- feat: individual step outputs with auto-masking [#7](https://github.com/Armadillidiid/ssm-get-parameters-action/pull/7) ([@Armadillidiid](https://github.com/Armadillidiid) [@Copilot](https://github.com/Copilot))
+
+#### Authors: 2
+
+- [@Copilot](https://github.com/Copilot)
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v1.0.5 (Thu Apr 30 2026)
 
 #### 🐛 Bug Fix
