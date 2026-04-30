@@ -7,7 +7,7 @@
 - **Individual mode** (default): Map explicit environment variable names to SSM parameter paths.
 - **Path-based mode** (`by-path: true`): Fetch all parameters recursively under an SSM path. Keys are derived from the last path segment.
 
-Both modes support optional key transformation to UPPER_SNAKE_CASE.
+Both modes support optional key transformation to UPPER_SNAKE_CASE. All fetched values are auto-masked in logs via `setSecret` and available as individual step outputs.
 
 ## Usage
 
@@ -72,7 +72,7 @@ jobs:
 | `secret`           | In individual mode: a mapping of env var names to SSM parameter paths (key=value or JSON). In path-based mode: a single SSM path to enumerate.       | true     |         |
 | `with-decryption`  | If set to true, retrieves decrypted values for secure string parameters.                                                                             | false    | `false` |
 | `parameter-prefix` | An optional prefix to filter SSM parameter names. Only parameters matching this prefix will be fetched. Ignored in path-based mode.                  | false    | ""      |
-| `env-file-path`    | The file path where the environment variables will be saved. Defaults to `./`.                                                                        | false    | `./`    |
+| `env-file-path`    | The directory path where the .env file will be saved. If not provided, no .env file is created.                                                          | false    | ""     |
 | `is-json`          | Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object. Ignored in path-based mode.                     | false    | false   |
 | `by-path`          | When set to true, the `secret` input is treated as a single SSM path. All parameters under that path are fetched recursively.                        | false    | `false` |
 | `transform-keys`   | When set to true, converts all environment variable keys to UPPER_SNAKE_CASE. Applies in both individual and path-based modes.                       | false    | `false` |
@@ -80,6 +80,18 @@ jobs:
 
 ## Outputs
 
-| Name  | Description                                       |
-| ----- | ------------------------------------------------- |
-| `env` | JSON string of the fetched environment variables. |
+Each SSM parameter is available as an individual step output at `${{ steps.<step-id>.outputs.<KEY> }}`. Values are automatically masked in workflow logs.
+
+Example:
+```yaml
+- name: Read SSM params
+  id: ssm
+  uses: Armadillidiid/ssm-get-parameters-action@v1
+  with:
+    secret: /my-app/prod
+    by-path: true
+    transform-keys: true
+
+- name: Use a param
+  run: echo "${{ steps.ssm.outputs.ECR_REPOSITORY_URI }}"
+```
