@@ -20,9 +20,9 @@ inputs:
     required: false
     default: ""
   env-file-path:
-    description: "The file path where the environment variables will be saved. Defaults to `./`."
+    description: "The directory path where the .env file will be saved. If not provided, no .env file is created."
     required: false
-    default: "./"
+    default: ""
   is-json:
     description: "Indicates whether the provided secret is in JSON format. Set to true if the secret is a JSON object."
     required: false
@@ -39,10 +39,6 @@ inputs:
     description: "When by-path is true, controls whether to recursively fetch parameters from sub-paths. Maps to the Recursive parameter of GetParametersByPath."
     required: false
     default: "true"
-
-outputs:
-  env:
-    description: "A JSON stringified object containing the environment variables fetched from SSM."
 
 runs:
   using: "node24"

@@ -16,17 +16,7 @@ const byPath: boolean = getBooleanInput("by-path");
 const transformKeys: boolean = getBooleanInput("transform-keys");
 const recursive: boolean = getBooleanInput("recursive");
 
-let envFilePath = "";
-try {
-	envFilePath = getEnvFilePath();
-} catch (error) {
-	if (error instanceof Error) {
-		core.error(`Validation failed: ${error.message}`);
-	} else {
-		core.error(`Validation failed: ${String(error)}`);
-	}
-	throw error;
-}
+const envFilePath = getEnvFilePath();
 
 export const env = {
 	SECRET: secret,
@@ -41,14 +31,16 @@ export const env = {
 
 function getEnvFilePath(): string {
 	const envFilePathInput: string = getInput("env-file-path");
+	if (!envFilePathInput) {
+		return "";
+	}
+
 	const resolvedPath: string = path.resolve(envFilePathInput);
 
-	// Validate if the path exists
 	if (!fs.existsSync(resolvedPath)) {
 		throw new Error(`The specified path does not exist: ${resolvedPath}`);
 	}
 
-	// Check if it's a directory
 	const stats = fs.statSync(resolvedPath);
 	if (!stats.isDirectory()) {
 		throw new Error(`The specified path is not a directory: ${resolvedPath}`);
