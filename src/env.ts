@@ -15,6 +15,7 @@ const isJSON: boolean = getBooleanInput("is-json");
 const byPath: boolean = getBooleanInput("by-path");
 const transformKeys: boolean = getBooleanInput("transform-keys");
 const recursive: boolean = getBooleanInput("recursive");
+const maskValues: boolean = getBooleanInput("mask-values");
 
 export const env = {
 	SECRET: secret,
@@ -24,6 +25,7 @@ export const env = {
 	BY_PATH: byPath,
 	TRANSFORM_KEYS: transformKeys,
 	RECURSIVE: recursive,
+	MASK_VALUES: maskValues,
 };
 
 export function getEnvFilePath(): string {
