@@ -1,3 +1,15 @@
+# v1.0.7 (Sun May 10 2026)
+
+#### 🐛 Bug Fix
+
+- feat: add masking [#8](https://github.com/Armadillidiid/ssm-get-parameters-action/pull/8) ([@Armadillidiid](https://github.com/Armadillidiid))
+
+#### Authors: 1
+
+- Emmanuel Isenah ([@Armadillidiid](https://github.com/Armadillidiid))
+
+---
+
 # v1.0.6 (Thu Apr 30 2026)
 
 #### 🐛 Bug Fix
