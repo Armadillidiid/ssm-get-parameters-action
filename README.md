@@ -7,7 +7,7 @@
 - **Individual mode** (default): Map explicit environment variable names to SSM parameter paths.
 - **Path-based mode** (`by-path: true`): Fetch all parameters recursively under an SSM path. Keys are derived from the last path segment.
 
-Both modes support optional key transformation to UPPER_SNAKE_CASE. All fetched values are auto-masked in logs via `setSecret` and available as individual step outputs.
+Both modes support optional key transformation to UPPER_SNAKE_CASE. Fetched values are masked in logs by default via `setSecret` and available as individual step outputs.
 
 ## Usage
 
@@ -77,10 +77,11 @@ jobs:
 | `by-path`          | When set to true, the `secret` input is treated as a single SSM path. All parameters under that path are fetched recursively.                        | false    | `false` |
 | `transform-keys`   | When set to true, converts all environment variable keys to UPPER_SNAKE_CASE. Applies in both individual and path-based modes.                       | false    | `false` |
 | `recursive`        | When `by-path` is true, controls whether to recursively fetch parameters from sub-paths. Maps to the `Recursive` parameter of `GetParametersByPath`. | false    | `true`  |
+| `mask-values`      | When true, masks fetched values in workflow logs using `setSecret`. Disable only for non-sensitive values.                                            | false    | `true`  |
 
 ## Outputs
 
-Each SSM parameter is available as an individual step output at `${{ steps.<step-id>.outputs.<KEY> }}`. Values are automatically masked in workflow logs.
+Each SSM parameter is available as an individual step output at `${{ steps.<step-id>.outputs.<KEY> }}`. Values are masked in workflow logs when `mask-values` is `true` (default).
 
 Example:
 ```yaml
@@ -94,4 +95,15 @@ Example:
 
 - name: Use a param
   run: echo "${{ steps.ssm.outputs.ECR_REPOSITORY_URI }}"
+```
+
+For non-sensitive values you want visible in logs or easier to pass around, disable masking:
+
+```yaml
+- name: Read non-secret params
+  id: ssm
+  uses: Armadillidiid/ssm-get-parameters-action@v1
+  with:
+    secret: VERSION=/my-app/prod/version
+    mask-values: false
 ```

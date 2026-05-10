@@ -120,8 +120,16 @@ const main = async (): Promise<void> => {
 		await saveEnvToPath(path.join(envFilePath, ENV_FILENAME), envValues);
 	}
 
+	if (!env.MASK_VALUES) {
+		core.warning(
+			"mask-values is disabled. Output values will not be masked in workflow logs.",
+		);
+	}
+
 	for (const [key, value] of envValues) {
-		core.setSecret(value);
+		if (env.MASK_VALUES) {
+			core.setSecret(value);
+		}
 		core.setOutput(key, value);
 	}
 };

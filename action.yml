@@ -39,6 +39,10 @@ inputs:
     description: "When by-path is true, controls whether to recursively fetch parameters from sub-paths. Maps to the Recursive parameter of GetParametersByPath."
     required: false
     default: "true"
+  mask-values:
+    description: "When true, masks fetched values in workflow logs using setSecret. Disable only for non-sensitive values."
+    required: false
+    default: "true"
 
 runs:
   using: "node24"
